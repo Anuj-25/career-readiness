@@ -123,7 +123,9 @@ function handleCommand(command) {
         case "skills":
             showSkills();
             break;
-
+        case "projects":
+            showProjects();
+            break;
         default:
             printOutput(`
                 <p>Command not found: <strong>${normalizedCommand}</strong></p>
@@ -193,6 +195,22 @@ function showSkills() {
 
 }
 
+function showProjects() {
+
+    let output = "Projects\n";
+    output += "--------\n\n";
+
+    PROJECTS.forEach((project, index) => {
+
+        output += `[${index + 1}] ${project.title}\n`;
+        output += `Status : ${project.status}\n`;
+        output += `Stack  : ${project.stack.join(", ")}\n\n`;
+
+    });
+
+    printOutput(output);
+
+}
 
 /* ============================
    Event Listeners
