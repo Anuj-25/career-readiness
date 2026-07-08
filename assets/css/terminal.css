@@ -76,4 +76,5 @@
       padding:20px;
       min-height:250px;
       font-family:var(--mono);
+      cursor:text;
   }
