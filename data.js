@@ -31,7 +31,7 @@ const LEARNING_LOG = [
     level: "info",
     tag: "LINUX.PERMISSIONS",
     summary: "Covered chmod/chown, octal vs symbolic notation, special permissions (SUID/SGID/sticky bit).",
-    pdf: null // set to "pdfs/day03-permissions.pdf" once you save the file
+    pdf: "pdfs/Day-03-Special-Permissions-ACL.pdf"
   },
   {
     day: 2,
@@ -39,7 +39,7 @@ const LEARNING_LOG = [
     level: "info",
     tag: "LINUX.FILESYSTEM",
     summary: "Filesystem hierarchy standard, mount points, inodes, directory structure walkthrough.",
-    pdf: null
+    pdf: "pdfs/Day-02-Users-Groups-Permissions.pdf"
   },
   {
     day: 1,
@@ -47,7 +47,7 @@ const LEARNING_LOG = [
     level: "ok",
     tag: "LINUX.INTRO",
     summary: "Linux basics, distros, shell fundamentals, first terminal commands.",
-    pdf: null
+    pdf: "pdfs/Day-01-Linux-Basics.pdf"
   }
 ];
 
