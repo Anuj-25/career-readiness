@@ -126,6 +126,9 @@ function handleCommand(command) {
         case "projects":
             showProjects();
             break;
+        case "resume":
+            showResume();
+            break;
         default:
             printOutput(`
                 <p>Command not found: <strong>${normalizedCommand}</strong></p>
@@ -209,6 +212,14 @@ function showProjects() {
     });
 
     printOutput(output);
+
+}
+
+function showResume() {
+
+    printOutput("Opening resume...");
+
+    window.open(RESUME.file, "_blank");
 
 }
 

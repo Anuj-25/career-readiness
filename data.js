@@ -144,6 +144,14 @@ const SKILLS = [
   { name: "Git & GitHub", status: "learning" }
 ];
 
+// ---- RESUME ----
+const RESUME = {
+    title: "Anuj Somani Resume",
+    file: "pdfs/Anuj-Somani-Resume.pdf",
+    lastUpdated: "2026-07-09"
+};
+
+
 // ---- ABOUT ----
 const PORTFOLIO = {
   about: {
