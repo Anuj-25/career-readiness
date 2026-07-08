@@ -120,6 +120,10 @@ function handleCommand(command) {
             showAbout();
             break;
 
+        case "skills":
+            showSkills();
+            break;
+
         default:
             printOutput(`
                 <p>Command not found: <strong>${normalizedCommand}</strong></p>
@@ -171,6 +175,19 @@ ${about.bio}
 Currently Learning:
 - ${about.currentlyLearning.join("\n- ")}
 `;
+
+    printOutput(output);
+
+}
+
+function showSkills() {
+
+    let output = "Skills\n";
+    output += "------\n\n";
+
+    SKILLS.forEach(skill => {
+        output += `• ${skill.name} (${skill.status})\n`;
+    });
 
     printOutput(output);
 
