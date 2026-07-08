@@ -143,3 +143,28 @@ const SKILLS = [
   { name: "Monitoring (Prometheus/Grafana)", status: "learning" },
   { name: "Git & GitHub", status: "learning" }
 ];
+
+// ---- ABOUT ----
+const PORTFOLIO = {
+  about: {
+    name: "Anuj Somani",
+
+    title: "Aspiring DevOps & Cloud Engineer",
+
+    location: "Pune, India",
+
+    mission:
+      "Building production-ready projects while transitioning into DevOps and Cloud Engineering.",
+
+    bio:
+      "I'm building Mission Switch 2026 to learn Software Engineering, Linux, JavaScript, Cloud, and DevOps by creating real-world projects instead of tutorial applications.",
+
+    currentlyLearning: [
+      "Linux",
+      "JavaScript",
+      "Git & GitHub",
+      "AWS",
+      "Docker"
+    ]
+  }
+};

@@ -59,13 +59,7 @@ function createPrompt() {
 
     terminalInput.focus();
 
-    terminalInput.addEventListener("keydown", (event) => {
-
-        if (event.key === "Enter") {
-            handleCommand(terminalInput.value);
-        }
-
-    });
+    terminalInput.addEventListener("keydown", handleKeyDown);
 
     scrollToBottom();
 }
@@ -85,6 +79,14 @@ function freezePrompt(command) {
     `);
 
     terminalInputLine.innerHTML = "";
+
+}
+
+function handleKeyDown(event) {
+
+    if (event.key === "Enter") {
+        handleCommand(event.target.value);
+    }
 
 }
 
@@ -112,6 +114,10 @@ function handleCommand(command) {
 
         case "help":
             showHelp();
+            break;
+
+        case "about":
+            showAbout();
             break;
 
         default:
@@ -144,6 +150,29 @@ function showHelp() {
 
         </div>
     `);
+
+}
+
+function showAbout() {
+
+    const { about } = PORTFOLIO;
+
+    const output = `
+Name: ${about.name}
+Title: ${about.title}
+Location: ${about.location}
+
+Mission:
+${about.mission}
+
+About:
+${about.bio}
+
+Currently Learning:
+- ${about.currentlyLearning.join("\n- ")}
+`;
+
+    printOutput(output);
 
 }
 
