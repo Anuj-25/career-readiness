@@ -10,6 +10,21 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
+
+<!-- /*
+
+Temporary
+
+Next Sprint
+
+↓
+
+Move everything to assets/css/main.css
+
+*/ -->
+<link rel="stylesheet" href="assets/css/main.css">
+<link rel="stylesheet" href="assets/css/terminal.css">
+
 <style>
   :root{
     --bg:        #0B0F14;
@@ -128,63 +143,6 @@
   .proj-stack{ display:flex; gap:6px; flex-wrap:wrap; }
   .stack-chip{ font-family:var(--mono); font-size:10.5px; color:var(--text-dim); background:var(--bg-raised); border:1px solid var(--line); padding:3px 7px; border-radius:4px; }
   
-
-  /**------------interactive terminal ---------------**/
-  /* ---------- TERMINAL ---------- */
-
-  .terminal-window{
-      background: var(--bg-raised);
-      border:1px solid var(--line);
-      border-radius:10px;
-      overflow:hidden;
-      margin-top:20px;
-  }
-
-  .terminal-header{
-      background:var(--bg-card);
-      border-bottom:1px solid var(--line);
-      padding:12px 18px;
-      display:flex;
-      align-items:center;
-  }
-
-  .terminal-header span{
-      display:inline-block;
-  }
-
-  .red,
-  .yellow,
-  .green{
-      width:12px;
-      height:12px;
-      border-radius:50%;
-      margin-right:8px;
-  }
-
-  .red{
-      background:#ff5f56;
-  }
-
-  .yellow{
-      background:#ffbd2e;
-  }
-
-  .green{
-      background:#27c93f;
-  }
-
-  .terminal-title{
-      margin-left:15px;
-      font-family:var(--mono);
-      color:var(--text-dim);
-      font-size:13px;
-  }
-
-  #terminal-body{
-      padding:20px;
-      min-height:250px;
-      font-family:var(--mono);
-  }
 
   /* ---------- LOG (journalctl style) ---------- */
   .log-box{
