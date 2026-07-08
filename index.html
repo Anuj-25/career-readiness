@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anuj — Linux / Cloud / DevOps Learning Log</title>
+<meta name="description" content="60-day journey to Linux Administrator, Cloud Engineer, and Junior DevOps Engineer readiness. Daily logs, hands-on projects, real output.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --bg:        #0B0F14;
+    --bg-raised: #121821;
+    --bg-card:   #161D27;
+    --line:      #232C38;
+    --text:      #E7ECF2;
+    --text-dim:  #8592A3;
+    --text-faint:#4C5768;
+    --ok:        #3FD07A;
+    --warn:      #E8A33D;
+    --info:      #4FA8E8;
+    --accent:    #E8A33D;
+    --mono: 'JetBrains Mono', monospace;
+    --sans: 'Inter', sans-serif;
+  }
+
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:var(--sans);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{ background:var(--accent); color:#0B0F14; }
+  a{ color:inherit; text-decoration:none; }
+
+  .wrap{ max-width:980px; margin:0 auto; padding:0 24px; }
+
+  /* ---------- NAV ---------- */
+  nav{
+    position:sticky; top:0; z-index:50;
+    background:rgba(11,15,20,0.88);
+    backdrop-filter: blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  nav .wrap{ display:flex; align-items:center; justify-content:space-between; height:60px; }
+  .brand{ font-family:var(--mono); font-weight:700; font-size:14px; letter-spacing:0.02em; display:flex; align-items:center; gap:8px;}
+  .brand .dot{ width:8px; height:8px; border-radius:50%; background:var(--ok); box-shadow:0 0 8px var(--ok); }
+  .navlinks{ display:flex; gap:28px; font-family:var(--mono); font-size:13px; color:var(--text-dim); }
+  .navlinks a:hover{ color:var(--text); }
+
+  /* ---------- HERO : systemctl status ---------- */
+  .hero{ padding:64px 0 40px; }
+  .term{
+    background:var(--bg-raised);
+    border:1px solid var(--line);
+    border-radius:10px;
+    overflow:hidden;
+    box-shadow: 0 20px 60px -20px rgba(0,0,0,0.6);
+  }
+  .term-bar{
+    display:flex; align-items:center; gap:8px;
+    padding:12px 16px;
+    border-bottom:1px solid var(--line);
+    background:var(--bg-card);
+  }
+  .term-bar span{ width:11px; height:11px; border-radius:50%; }
+  .term-bar .r{background:#3a3f47;} .term-bar .y{background:#3a3f47;} .term-bar .g{background:#3a3f47;}
+  .term-bar .label{ margin-left:8px; font-family:var(--mono); font-size:12px; color:var(--text-faint); }
+  .term-body{ padding:28px 24px 30px; font-family:var(--mono); font-size:14px; }
+  .term-body .cmd{ color:var(--text-dim); margin-bottom:18px; }
+  .term-body .cmd::before{ content:"$ "; color:var(--ok); }
+  .unit-name{ font-size:19px; font-weight:700; color:var(--text); margin-bottom:2px;}
+  .unit-desc{ color:var(--text-dim); margin-bottom:16px; font-size:13px;}
+  .status-line{ display:flex; gap:10px; margin-bottom:6px; flex-wrap:wrap; }
+  .status-line .k{ color:var(--text-faint); width:110px; flex-shrink:0; }
+  .status-line .v{ color:var(--text); }
+  .status-line .v.active{ color:var(--ok); font-weight:600; }
+  .bar-track{ width:100%; max-width:340px; height:8px; background:var(--bg-card); border:1px solid var(--line); border-radius:4px; overflow:hidden; margin-top:6px;}
+  .bar-fill{ height:100%; background:linear-gradient(90deg, var(--ok), #7BE0A6); }
+  .roles-row{ margin-top:18px; display:flex; gap:8px; flex-wrap:wrap; }
+  .role-pill{
+    font-family:var(--mono); font-size:11.5px; padding:5px 10px;
+    border:1px solid var(--line); border-radius:20px; color:var(--text-dim);
+  }
+
+  .hero-sub{ margin-top:22px; color:var(--text-dim); font-size:15px; max-width:640px; }
+  .hero-sub b{ color:var(--text); font-weight:600; }
+
+  /* ---------- SECTION scaffolding ---------- */
+  section{ padding:56px 0; border-top:1px solid var(--line); }
+  .eyebrow{ font-family:var(--mono); font-size:12px; color:var(--accent); letter-spacing:0.08em; text-transform:uppercase; margin-bottom:10px; }
+  h2{ font-size:26px; font-weight:800; letter-spacing:-0.01em; margin-bottom:8px; }
+  .section-desc{ color:var(--text-dim); font-size:14.5px; max-width:600px; margin-bottom:32px; }
+
+  /* ---------- SKILLS ---------- */
+  .skills-grid{ display:grid; grid-template-columns:repeat(2, 1fr); gap:10px; }
+  .skill-row{
+    display:flex; align-items:center; justify-content:space-between;
+    background:var(--bg-card); border:1px solid var(--line); border-radius:8px;
+    padding:12px 14px; font-size:13.5px;
+  }
+  .skill-status{ font-family:var(--mono); font-size:11px; padding:3px 8px; border-radius:4px; white-space:nowrap; margin-left:10px;}
+  .skill-status.learning{ background:rgba(79,168,232,0.12); color:var(--info); }
+  .skill-status.practiced{ background:rgba(232,163,61,0.12); color:var(--warn); }
+  .skill-status.confident{ background:rgba(63,208,122,0.12); color:var(--ok); }
+
+  /* ---------- PROJECTS ---------- */
+  .projects-grid{ display:grid; grid-template-columns:repeat(2, 1fr); gap:14px; }
+  .proj-card{
+    background:var(--bg-card); border:1px solid var(--line); border-radius:10px;
+    padding:18px; transition:border-color .15s ease;
+  }
+  .proj-card:hover{ border-color:#354154; }
+  .proj-top{ display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:8px; }
+  .proj-title{ font-weight:700; font-size:14.5px; }
+  .proj-id{ font-family:var(--mono); font-size:11px; color:var(--text-faint); }
+  .proj-status{ font-family:var(--mono); font-size:10.5px; padding:3px 8px; border-radius:4px; text-transform:uppercase; letter-spacing:0.03em; flex-shrink:0; }
+  .proj-status.planned{ background:rgba(133,146,163,0.12); color:var(--text-dim); }
+  .proj-status.in-progress{ background:rgba(232,163,61,0.12); color:var(--warn); }
+  .proj-status.done{ background:rgba(63,208,122,0.12); color:var(--ok); }
+  .proj-desc{ color:var(--text-dim); font-size:13px; margin-bottom:12px; }
+  .proj-stack{ display:flex; gap:6px; flex-wrap:wrap; }
+  .stack-chip{ font-family:var(--mono); font-size:10.5px; color:var(--text-dim); background:var(--bg-raised); border:1px solid var(--line); padding:3px 7px; border-radius:4px; }
+
+  /* ---------- LOG (journalctl style) ---------- */
+  .log-box{
+    background:var(--bg-raised); border:1px solid var(--line); border-radius:10px;
+    padding:8px 0; font-family:var(--mono); font-size:12.5px; overflow:hidden;
+  }
+  .log-line{ display:flex; gap:12px; padding:10px 18px; border-bottom:1px solid var(--line); align-items:baseline; flex-wrap:wrap; }
+  .log-line:last-child{ border-bottom:none; }
+  .log-date{ color:var(--text-faint); flex-shrink:0; width:150px; }
+  .log-tag{ flex-shrink:0; font-weight:600; }
+  .log-tag.info{ color:var(--info); }
+  .log-tag.ok{ color:var(--ok); }
+  .log-tag.warn{ color:var(--warn); }
+  .log-msg{ color:var(--text-dim); flex:1; min-width:200px; }
+  .log-pdf{ color:var(--accent); flex-shrink:0; font-size:11.5px; }
+  .log-empty{ padding:20px 18px; color:var(--text-faint); }
+  .log-footer{ text-align:center; margin-top:16px; }
+  .log-footer a{ font-family:var(--mono); font-size:12.5px; color:var(--accent); border-bottom:1px solid transparent; }
+  .log-footer a:hover{ border-color:var(--accent); }
+
+  /* ---------- FOOTER ---------- */
+  footer{ padding:40px 0 60px; border-top:1px solid var(--line); }
+  .footer-grid{ display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px; }
+  .footer-links{ display:flex; gap:20px; font-family:var(--mono); font-size:13px; }
+  .footer-links a{ color:var(--text-dim); }
+  .footer-links a:hover{ color:var(--text); }
+  .footer-note{ color:var(--text-faint); font-size:12px; font-family:var(--mono); }
+
+  @media (max-width:680px){
+    .skills-grid, .projects-grid{ grid-template-columns:1fr; }
+    .log-date{ width:auto; }
+    .unit-name{ font-size:16px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <div class="brand"><span class="dot"></span>anuj@career:~$</div>
+    <div class="navlinks">
+      <a href="#skills">skills</a>
+      <a href="#projects">projects</a>
+      <a href="#log">log</a>
+      <a href="log.html">full log</a>
+    </div>
+  </div>
+</nav>
+
+<div class="wrap">
+  <section class="hero">
+    <div class="term">
+      <div class="term-bar">
+        <span class="r"></span><span class="y"></span><span class="g"></span>
+        <span class="label">bash</span>
+      </div>
+      <div class="term-body">
+        <div class="cmd">systemctl status career-readiness.service</div>
+        <div class="unit-name" id="unitName">career-readiness.service</div>
+        <div class="unit-desc">Linux Administrator / Cloud Engineer / Junior DevOps Engineer — readiness build</div>
+
+        <div class="status-line"><span class="k">Loaded:</span><span class="v">loaded (60-day curriculum; self-paced)</span></div>
+        <div class="status-line"><span class="k">Active:</span><span class="v active" id="statusActive">active (running)</span></div>
+        <div class="status-line"><span class="k">Progress:</span><span class="v" id="progressText">Day 3 / 60</span></div>
+        <div class="bar-track"><div class="bar-fill" id="progressBar" style="width:5%"></div></div>
+
+        <div class="roles-row" id="rolesRow"></div>
+      </div>
+    </div>
+
+    <p class="hero-sub">
+      Daily, practical log of a self-directed path into infrastructure and cloud roles —
+      <b>real terminal output</b>, real projects, real mistakes fixed. No filler, no fluff.
+      Every entry below links to the actual work, not a summary of it.
+    </p>
+  </section>
+
+  <section id="skills">
+    <div class="eyebrow">Skills matrix</div>
+    <h2>What's under active development</h2>
+    <p class="section-desc">Status reflects honest self-assessment, not course completion — "learning" means introduced, "practiced" means hands-on reps done, "confident" means interview-ready.</p>
+    <div class="skills-grid" id="skillsGrid"></div>
+  </section>
+
+  <section id="projects">
+    <div class="eyebrow">Portfolio projects</div>
+    <h2>8 projects, curriculum-mapped</h2>
+    <p class="section-desc">Each one ships with architecture notes, commands run, troubleshooting encountered, and a linked GitHub repo once complete.</p>
+    <div class="projects-grid" id="projectsGrid"></div>
+  </section>
+
+  <section id="log">
+    <div class="eyebrow">journalctl -u learning.service</div>
+    <h2>Recent log entries</h2>
+    <p class="section-desc">Latest study sessions. Every entry with a PDF icon links to the actual lesson material used that day.</p>
+    <div class="log-box" id="logBox"></div>
+    <div class="log-footer"><a href="log.html">View full log history →</a></div>
+  </section>
+</div>
+
+<footer>
+  <div class="wrap footer-grid">
+    <div class="footer-links">
+      <a href="https://github.com/" id="githubLink" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://linkedin.com/" id="linkedinLink" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="mailto:you@example.com" id="emailLink">Email</a>
+    </div>
+    <div class="footer-note">Built while learning. Updated daily.</div>
+  </div>
+</footer>
+
+<script src="data.js"></script>
+<script>
+  // ---- HERO ----
+  document.getElementById('statusActive').textContent = CURRICULUM.status;
+  document.getElementById('progressText').textContent = `Day ${CURRICULUM.currentDay} / ${CURRICULUM.totalDays}`;
+  document.getElementById('progressBar').style.width = Math.min(100, (CURRICULUM.currentDay / CURRICULUM.totalDays) * 100) + '%';
+  document.getElementById('rolesRow').innerHTML = CURRICULUM.targetRoles.map(r => `<span class="role-pill">target: ${r}</span>`).join('');
+
+  // ---- SKILLS ----
+  document.getElementById('skillsGrid').innerHTML = SKILLS.map(s => `
+    <div class="skill-row">
+      <span>${s.name}</span>
+      <span class="skill-status ${s.status}">${s.status}</span>
+    </div>
+  `).join('');
+
+  // ---- PROJECTS ----
+  document.getElementById('projectsGrid').innerHTML = PROJECTS.map(p => `
+    <div class="proj-card">
+      <div class="proj-top">
+        <div>
+          <div class="proj-id">${p.id.toUpperCase()}</div>
+          <div class="proj-title">${p.title}</div>
+        </div>
+        <span class="proj-status ${p.status}">${p.status.replace('-', ' ')}</span>
+      </div>
+      <div class="proj-desc">${p.description}</div>
+      <div class="proj-stack">${p.stack.map(t => `<span class="stack-chip">${t}</span>`).join('')}</div>
+    </div>
+  `).join('');
+
+  // ---- LOG PREVIEW (latest 5) ----
+  const preview = LEARNING_LOG.slice(0, 5);
+  document.getElementById('logBox').innerHTML = preview.length ? preview.map(e => `
+    <div class="log-line">
+      <span class="log-date">${e.date}</span>
+      <span class="log-tag ${e.level}">[Day ${e.day}] ${e.tag}</span>
+      <span class="log-msg">${e.summary}</span>
+      ${e.pdf ? `<a class="log-pdf" href="${e.pdf}" target="_blank">↓ pdf</a>` : ''}
+    </div>
+  `).join('') : `<div class="log-empty">No entries yet — add your first day to data.js</div>`;
+</script>
+
+</body>
+</html>

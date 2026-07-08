@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Full Learning Log — Anuj</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0B0F14; --bg-raised:#121821; --bg-card:#161D27; --line:#232C38;
+    --text:#E7ECF2; --text-dim:#8592A3; --text-faint:#4C5768;
+    --ok:#3FD07A; --warn:#E8A33D; --info:#4FA8E8; --accent:#E8A33D;
+    --mono:'JetBrains Mono',monospace; --sans:'Inter',sans-serif;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{ background:var(--bg); color:var(--text); font-family:var(--sans); }
+  a{ color:inherit; }
+  .wrap{ max-width:820px; margin:0 auto; padding:0 24px; }
+  nav{ position:sticky; top:0; background:rgba(11,15,20,0.9); backdrop-filter:blur(10px); border-bottom:1px solid var(--line); z-index:10;}
+  nav .wrap{ display:flex; align-items:center; justify-content:space-between; height:60px; }
+  .brand{ font-family:var(--mono); font-weight:700; font-size:14px; }
+  .back{ font-family:var(--mono); font-size:13px; color:var(--text-dim); }
+  .back:hover{ color:var(--text); }
+
+  .head{ padding:40px 0 24px; }
+  .eyebrow{ font-family:var(--mono); font-size:12px; color:var(--accent); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:8px; }
+  h1{ font-size:26px; font-weight:800; margin-bottom:8px; }
+  .sub{ color:var(--text-dim); font-size:14px; }
+
+  .filters{ display:flex; gap:8px; padding:20px 0; flex-wrap:wrap; }
+  .filter-btn{
+    font-family:var(--mono); font-size:12px; padding:6px 12px; border-radius:20px;
+    border:1px solid var(--line); background:var(--bg-card); color:var(--text-dim); cursor:pointer;
+  }
+  .filter-btn.active{ border-color:var(--accent); color:var(--accent); }
+
+  .log-box{ background:var(--bg-raised); border:1px solid var(--line); border-radius:10px; overflow:hidden; margin-bottom:60px; }
+  .log-line{ display:flex; gap:14px; padding:14px 20px; border-bottom:1px solid var(--line); align-items:baseline; flex-wrap:wrap; font-family:var(--mono); font-size:13px; }
+  .log-line:last-child{ border-bottom:none; }
+  .log-date{ color:var(--text-faint); width:150px; flex-shrink:0; }
+  .log-tag{ font-weight:600; flex-shrink:0; }
+  .log-tag.info{ color:var(--info); }
+  .log-tag.ok{ color:var(--ok); }
+  .log-tag.warn{ color:var(--warn); }
+  .log-msg{ color:var(--text-dim); flex:1; min-width:220px; }
+  .log-pdf{ color:var(--accent); flex-shrink:0; }
+  .log-empty{ padding:24px 20px; color:var(--text-faint); font-family:var(--mono); font-size:13px; }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <div class="brand">anuj@career:~$</div>
+    <a class="back" href="index.html">← back to portfolio</a>
+  </div>
+</nav>
+
+<div class="wrap">
+  <div class="head">
+    <div class="eyebrow">journalctl -u learning.service --no-pager</div>
+    <h1>Complete learning log</h1>
+    <p class="sub">Every study day, unfiltered. This is the proof-of-work trail — not a highlight reel.</p>
+  </div>
+
+  <div class="filters" id="filters"></div>
+
+  <div class="log-box" id="fullLog"></div>
+</div>
+
+<script src="data.js"></script>
+<script>
+  const tags = ['all', ...new Set(LEARNING_LOG.map(e => e.tag.split('.')[0]))];
+  const filtersEl = document.getElementById('filters');
+  const logEl = document.getElementById('fullLog');
+  let activeFilter = 'all';
+
+  function render(){
+    const entries = activeFilter === 'all'
+      ? LEARNING_LOG
+      : LEARNING_LOG.filter(e => e.tag.startsWith(activeFilter));
+
+    logEl.innerHTML = entries.length ? entries.map(e => `
+      <div class="log-line">
+        <span class="log-date">${e.date}</span>
+        <span class="log-tag ${e.level}">[Day ${e.day}] ${e.tag}</span>
+        <span class="log-msg">${e.summary}</span>
+        ${e.pdf ? `<a class="log-pdf" href="${e.pdf}" target="_blank">↓ pdf</a>` : ''}
+      </div>
+    `).join('') : `<div class="log-empty">No entries for this filter yet.</div>`;
+  }
+
+  filtersEl.innerHTML = tags.map(t => `<button class="filter-btn ${t==='all'?'active':''}" data-tag="${t}">${t}</button>`).join('');
+  filtersEl.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      activeFilter = btn.dataset.tag;
+      filtersEl.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      render();
+    });
+  });
+
+  render();
+</script>
+
+</body>
+</html>
